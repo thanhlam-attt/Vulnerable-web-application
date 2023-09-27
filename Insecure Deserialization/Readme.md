@@ -8,8 +8,8 @@
     - Ngược lại với Serialization là Deserialization
 - Ví dụ về Serialization và Deserialization:
     
-    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e7b71266-98be-4fc8-8ccd-140d1349865e/293bca11-80f2-400a-b9d0-6e5f9aa4e135/Untitled.jpeg)
-    
+    ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/a1b8f2bd-63c2-4e0a-a5b4-dffaa12d0644)
+
 
 - Chú ý rằng: tất cả các thuộc tính ban đầu của đối tượng sẽ được lưu trữ trong data steam được serialize kể cả các trường private → Để ngăn các trường đó bị serialize thì chúng phải được đánh dấu là “transient” trong khi khai báo
 
@@ -48,7 +48,10 @@
             
     - Giải thích thêm về các format trong định dạng serialization
     
-    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e7b71266-98be-4fc8-8ccd-140d1349865e/dfc40f47-649d-4492-ba43-90c738cef269/Untitled.webp)
+      ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/79baa3b1-8881-4cf3-96dd-4435afd32194)
+
+
+
     
     - Các methods có sẵn trong PHP để phục vụ cho việc serialization là serialize() và unserialize() → Nếu có quyền truy cập vào source code ⇒ Có thể tìm 2 method trên tại bất cứ đâu
 - **Định dạng Java serialization**
@@ -91,19 +94,25 @@
     - Ngoài check các giá trị thuộc tính thì các chức năng của một website cũng có thể thực hiện các hành động nguy hiểm trên dữ liệu từ một object deserialized.
     - Giả sử như trên website tồn tại một chức năng cho phép người dùng xóa ảnh bằng cách truy cập vào địa chỉ của image như sau: `$user->image_location`
         - Nếu $user được tạo từ một serialized object → attacker có thể chỉnh sửa giá trị image_location thành một đường dẫn file tùy ý ⇒ Có thể xóa file tùy ý
+    - Chú ý:
+        - Thi thoảng có thể thêm “~” vào sau tên file có thể đọc được source code ví dụ như:
+          ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/48ac8f6e-dd29-4389-89fa-d436be5c7433)
+
 - **Các Magic methods**
     - Các method này là các method tự động được gọi khi một event hoặc một scenario xảy ra mà không cần phải gọi trực tiếp. Ví dụ như phương thức khởi tạo,…
-    - Các method này thường được chỉ ra bởi tiền tố hoặc bao quanh method là 2 dấu gạch dưới “__” (double_underscores) Ví dụ như **“__construct()”** hoặc **“__init__”.**  Thông thường, các method đặc biệt này được dùng để khởi tạo các thuộc tính của một instance → Tuy nhiên, các method đặc biệt này có thể được tùy chỉnh bởi developer để thực thi bất kỳ đoạn code nào mà họ muốn
+    - Các method này thường được chỉ ra bởi tiền tố hoặc bao quanh method là 2 dấu gạch dưới “__” (double_underscores) Ví dụ như **“__construct()”** hoặc **“__init__”.**  Thông thường, các magic method này được dùng để khởi tạo các thuộc tính của một instance → Tuy nhiên, các magic method này có thể được tùy chỉnh bởi developer để thực thi bất kỳ đoạn code nào mà họ muốn
     - Các magic method thường gặp là:
         
-        ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e7b71266-98be-4fc8-8ccd-140d1349865e/f326cb05-75aa-4f8a-bc52-67f4554bd783/Untitled.webp)
+        ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/44a22d76-f902-4142-889c-c28b343f3714)
+
         
     - Các method này được sử dụng rộng rãi và bản thân nó không chứa lỗ hổng. Nhưng nó trở nên nguy hiểm nếu đoạn code mà được thực thi xử lý các dữ liệu có thể được điều khiển bởi attacker → khi một object được deserialize, nó có thể được khai thác bởi attacker để tự động gọi tới các phương thức trên dữ liệu được deserialize khi gặp điều kiện tương ứng
     - Ví dụ ta có đoạn code như sau:
         
-        ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e7b71266-98be-4fc8-8ccd-140d1349865e/71aa5605-3257-43c8-ae1b-949040b21e3a/Untitled.webp)
-        
-        ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e7b71266-98be-4fc8-8ccd-140d1349865e/30f58f6e-4fb8-4387-accd-5b981aeae167/Untitled.webp)
+        ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/c42fca4b-7ac4-4c38-88ba-7a7e508dcde2)
+
+        ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/7bbfab7a-f499-4443-b524-25484d18edd6)
+
         
         ⇒ Phân tích ta thấy lỗ hổng tồn tại ở dòng 19 nơi mà người dùng có thể control được data, giả sử 2 dòng comment cuối cùng là payload, ta cùng phân tích như sau:
         
@@ -137,24 +146,27 @@
         - Tìm được phar file vào đối tượng cần khai thác
         - Tìm được entry point, đó là những chỗ mà các filesystem function gọi tới các phar file do người dùng kiểm soát. Một số filesystem function có thể trigger lỗ hổng này là:
             
-            ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e7b71266-98be-4fc8-8ccd-140d1349865e/d4501ab6-fd80-4670-945a-53719057366d/Untitled.png)
+            ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/525169a8-bc68-4ab1-ac90-14d42463ff29)
+
             
     - Ví dụ về một trường hợp khai thác lỗ hổng PHAR deserialization trên zend framework như sau:
         - Đầu tiên là tìm entrypoint mà filesystem function được gọi:
             
-            ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e7b71266-98be-4fc8-8ccd-140d1349865e/58a632e4-f863-4f35-ae6f-3bce4ff4d2b6/Untitled.png)
-            
-            ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e7b71266-98be-4fc8-8ccd-140d1349865e/35076210-91aa-4789-815f-f916b6d83da6/Untitled.png)
-            
-            - Ta có thể thấy tại entry point đó, file_exists() được gọi và có tham số truyền vào là $url được gửi lên bởi người dùng
+            ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/fbc48180-efa4-4508-9255-df0f88543d87)
+
+            ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/2a2f96c9-91dc-4731-b219-82476defb446)
+
+        - Ta có thể thấy tại entry point đó, file_exists() được gọi và có tham số truyền vào là $url được gửi lên bởi người dùng
         - Tiếp đến là tìm POP chain → điều này chỉ có thể thực hiện bằng 2 cách 1 là review source 2 là sử dụng tool PHPGCC
         - Tạo một file PHAR với tên **“test.phar”** với POP chain được generate bên trên:
             
-            ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e7b71266-98be-4fc8-8ccd-140d1349865e/34eca784-6f10-4262-90ca-8aae8215b3fc/Untitled.png)
+            ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/8b0b9415-eef4-4abe-a228-e378d5fbc431)
+
             
             → Đẩy file này vào chỗ cần khai thác và chạy nó là xong.
             
-            ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e7b71266-98be-4fc8-8ccd-140d1349865e/1c322366-a38f-4eaa-9846-e3b528fad192/Untitled.png)
+          ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/83c8da0b-84ba-4684-8c3f-c5867b8ec302)
+
             
 
 ## Tham khảo
