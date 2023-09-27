@@ -69,7 +69,7 @@
 
 ## **Cách ngăn chặn SQL Injection:**
 
-- **Sử dụng parameter thay vì cộng chuỗi:** Nếu dữ liệu truyền vào không hợp lệ thì SQL Engine tự động báo lỗi, không cần dùng code check
+- **Sử dụng prepared statement thay vì cộng chuỗi:** Nếu dữ liệu truyền vào không hợp lệ thì SQL Engine tự động báo lỗi, không cần dùng code check
 - **Không hiển thị exception, message lỗi:** Hacker dựa vào message lỗi để tìm ra cấu trúc database → Khi có lỗi chỉ hiện tbao lỗi chứ không hiển thị đầy đủ thông tin về lỗi tránh bị lợi dụng
 - **Lọc dữ liệu từ người dùng:** Sử dụng filter lọc các ký tự đặc biệt như (; “ ‘) hay các từ khóa như SELECT, UNION
     - Lọc các ký tự đặc biệt như (; “ ‘) ta có thể bypass nó bằng cách
