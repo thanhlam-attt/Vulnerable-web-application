@@ -138,9 +138,11 @@
         - Phar file trong PHP tương tự như jar file trong java là một packet format cho phép ta gói nhiều các tập code, các thư viện, hình ảnh,… vào một tệp
         - Cấu trúc của một phar file gồm có:
             - **Stub:** là một file PHP hoặc ít nhất chứa đoạn code sau `<?php __HALT_COMPILER();`
-            - **A manifest:** miêu tả khái quát nội dung sẽ có trong file
+            - **A manifest:** chứa các trường metadata bao gồm thông tin về archive và các file được archive
             - **Nội dung chính của file**
             - **[Signature]:** để kiểm tra tính toàn vẹn của file
+    - Tại sao file PHAR lại có thể khai thác được lỗ hổng deserialization:
+        - Kẻ tấn công có thể thêm được object từ bất kỳ class nào vào metadata của PHAR → Khi file PHAR được kích hoạt bên trong code PHP thì tiến trình deserialization cũng được kích hoạt
     - Từ đó nên để khai thác lỗ hổng PHAR deserialization ta cần 3 điều kiện sau:
         - Tìm được POP chain trong source code cần khai thác
         - Tìm được phar file vào đối tượng cần khai thác
