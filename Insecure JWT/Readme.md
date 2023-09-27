@@ -1,4 +1,5 @@
-- **JWT là gì?**
+# Insecure JWT
+## **JWT là gì?**
   - JWT là một định dạng chuẩn, để truyền an toàn các thông tin giữa các bên dưới dạng đối tượng JSON
   - JWT gồm 3 phần: header, payload và signature
     - **Header - gồm 2 phần**
@@ -43,7 +44,8 @@
         - JWT là phương pháp sẽ trở thành 1 tiêu chuẩn để thay thế cho Session và Cookies.
         - Vì token được lưu phía client trong khi session cookies được lưu cả bên phía server → là vấn đề lớn khi mà một số lượng lớn người dùng sử dụng hệ thống cùng 1 lúc
         - Nhưng cũng có nhược điểm là JWT có kích thước lớn hơn nhiều so với session ID vì JWT chứa nhiều thông tin người dùng hơn. Ngoài ra thông tin người dùng trong JWT có thể bị decode
-- **Những rủi ro khi sử dụng JWT xác thực:**
+
+  ## **Những rủi ro khi sử dụng JWT xác thực:**
     - **JWT không bảo vệ dữ liệu của chúng ta** mà chỉ xác thực tính toàn vẹn và xác thực nguồn gốc thông tin, vì: các bước xử lý Header, Payload và Signature dữ liệu chỉ được Encoded và Hash chứ không phải Encrypted → Có thể dễ dàng decoded và xem thông tin, đánh cắp thông tin nhạy cảm
         - **Sự khác biệt giữa Encoded và Encrypted:**
             - **Encode:** là quá trình chuyển đổi từ định dạng này sang định dạng khác dựa vào vào một phương pháp, một bảng mã được công bố công khai → mục đích là để tăng sử dụng dữ liệu trong hệ thống khác nhau
@@ -100,7 +102,9 @@
                 
                 
                 - Một số ứng dụng lưu trữ khóa trong cơ sở dữ liệu, nếu một khóa được tham chiếu trong tham số KID → có thể dễ bị chèn SQL → thực hiện được SQL Injection
-- **Cách ngăn chặn các rủi ro này:**
+
+
+  ## **Cách ngăn chặn các rủi ro này:**
     - **Sử dụng HTTPS** đảm bảo thông tin trong JWT được mã hóa trên đường truyền, tránh bị giả mạo hoặc lấy trộm JWT
     - **Sử dụng mã hóa:**  Bảo vệ nội dung JWT, tránh bị đánh cắp và giả mạo thông tin trong JWT
     - **Sử dụng các thuật toán mã hóa an toàn - có key an toàn:** Tránh bị brute force khóa và ngăn chặn hacker giải mã để đọc thông tin trong JWT
@@ -116,6 +120,8 @@
     - John The Ripper:
         - `john jwt_token.txt -w=/usr/share/wordlists/rockyou.txt --format=HMAC-SHA256`
 
+
+## **Tham Khảo**
 - Attack JWT: https://portswigger.net/web-security/jwt
 - Bypass JWT: https://www.thehacker.recipes/web/inputs/jwt
 - Tài liệu 1: https://blog.intigriti.com/2021/07/27/hacker-tools-jwt_tool/?cn-reloaded=1
