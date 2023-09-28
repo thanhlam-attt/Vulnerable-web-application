@@ -23,7 +23,8 @@
     - **Trong việc xác thực**, khi user login thành công, Server trả về 1 chuỗi JWT về Browser, và Token JWT được lưu lại trong Browser người dùng(thường là localStorage hoặc HTTP Cookies) thay vì việc tạo 1 session trên Server và trả về cookie
     - Khi user muốn truy cập → Browser sẽ gửi token JWT này trong Header Authorization
 
-    ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/eff4bd30-bd91-4ec9-be07-a2f216d864af)
+    ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/88e0f970-7999-4b34-b5ec-b5d4f2facc1d)
+
 
 
 - ***Vậy thì, JWT có được lưu trên server không hay chỉ mỗi user’s browser không, nếu không → server validate JWT user’s browser như thế nào?***
@@ -34,7 +35,7 @@
     - ***JWT, Cookies được lưu trên Browser người dùng còn Session được lưu cả trên user Browser và bên phía server***
     - ***Cơ chế xác thực đăng nhập bằng session và cookies:***
         
-        ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/d0c00b47-1c65-40c0-aedb-a0a05e5b3f8b)
+       ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/ccfa9cff-f15e-4bd6-b484-8402d407a58e)
 
         
         - Sau khi đăng nhập, server sẽ tạo ra session cho user và lưu vào đâu đó như file, memory, database,… Sau đó một sessionID được lưu vào trong cookies của trình duyệt, khi user truy cập vào website thì session ID đó sẽ được browser lấy ra và gửi kèm theo trong request. Nhờ vậy mà server biết user này đã đăng nhập hay chưa. Sau khi user log-out thì session sẽ bị xóa đi (hoặc có thể không - như facebook hay insta chả hạn)
@@ -73,10 +74,11 @@
         → khi thay đổi giá trị alg từ RS256 sang HS256 thì public key của mã hóa bất đối xứng sẽ là secret key → lộ khóa
         
     
-        ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/f675e026-829c-4c04-8e58-093dc98fba5a)
+        ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/2b70c66e-87f1-4cfc-bfe0-cccb0cf89418)
+
 
     
-    - Ở đoạn code trên mô tả việc xác thực chữ ký JWT sử dụng public_key, khi chuyển từ RS sang HS thì public_key chuyển thành secret key và private key cũng phải chuyển thành secret key. Các bước tấn công như sau:
+    - Có thể thấy, ở đoạn code trên mô tả việc xác thực chữ ký JWT sử dụng public_key, khi chuyển từ RS sang HS thì public_key chuyển thành secret key và private key cũng phải chuyển thành secret key. Các bước tấn công như sau:
       1. Thay đổi kiểu thuật toán từ RS256 sang HS256
       2. Thực hiện thay đổi trong phần payload
       3. Ký token bằng khóa công khai
@@ -94,11 +96,14 @@
             - **KID (Key ID):** Thường các máy chủ ủy quyền sử dụng nhiều khóa bí mật để ký token. Phần tử KID sẽ hoạt động như một mã định danh chỉ định khóa nào sẽ được sử dụng trong xác minh chữ ký token
                 - Vì kẻ tấn công có quyền kiểm soát tham số kid ⇒ có thể gửi payload chèn lệnh đến máy chủ và thực hiện các hành động độc hại như: command injection, path traversal hay SQL Injection ⇒ dẫn tới RCE
                 
-                ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/430dc9ff-3f25-4179-9634-6e4af8e9a319)
+                ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/4809dbae-3898-4392-924d-bba6a9dd7c91)
 
-                ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/f931e494-cdf2-478f-8195-a496cbd71923)
 
-                ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/ad580fe5-b8c3-41c1-86ae-07dddf790c40)
+                ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/e67a7d13-5f94-4be4-8dac-6a1f6252d3bd)
+
+
+                ![image](https://github.com/thanhlam-attt/Web_Vulnerabilities/assets/79523444/3cbcc827-f85a-4e84-a365-1a512e84b2ff)
+
                 
                 
                 - Một số ứng dụng lưu trữ khóa trong cơ sở dữ liệu, nếu một khóa được tham chiếu trong tham số KID → có thể dễ bị chèn SQL → thực hiện được SQL Injection
